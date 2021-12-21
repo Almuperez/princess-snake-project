@@ -4,8 +4,7 @@ Juego basado en la serpiente del nokia3310
 Mi objetivo es llevar a cabo el famoso juego de la serpiente al que muchos de nosotros hemos jugado. 
 La serpeinte irá comiendo coronas de princesa y a medida que come va creaciendo, si se encuentra con otro icono que no sea la corona y se lo come entonces pierdes, al igual que si se da con la pared.
 
-Link de proyecto : https://github.com/Almuperez/princess-snake-project/projects/1
-
+Link de proyecto : https://github.com/Almuperez/princess-snake-project/
 
 ## Table of contents
 

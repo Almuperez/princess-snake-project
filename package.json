@@ -1,0 +1,11 @@
+{
+  "name": "proyecto_canvas",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:Almuperez/princess-snake-project.git",
+  "author": "Almudena",
+  "license": "MIT",
+  "devDependencies": {
+    "tsconfig.json": "^1.0.10"
+  }
+}

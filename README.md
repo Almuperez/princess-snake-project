@@ -13,7 +13,7 @@
 - [Manual de instalación](#manual-de-instalación)
 - [Ejemplos de código](#ejemplos-de-código)
 - [Entornos de ejecución](#entornos-de-ejecución)
-- [Varianles globales](#varianles-globales)
+- [Recursos útiles](#recursos-útiles)
 - [Listado de paquetes y dependencias](#listado-de-paquetes-y-dependencias)
 - [Estadísticas](#estadísticas)
 - [Licencias](#licencias)
@@ -43,7 +43,11 @@ yarn run dev
 
 ## Ejemplos de código
 ## Entornos de ejecución
-## Varianles globales
+## Recursos útiles
+Para llevar a cabo el canvas del juego entender la Api canvas: 
+https://developer.mozilla.org/es/docs/Web/API/Canvas_API 
+https://developer.mozilla.org/es/docs/Web/API/Canvas_API
+
 ## Listado de paquetes y dependencias
 NodeJS
 Yarn

@@ -9,9 +9,7 @@
   "repository": "git@github.com:Almuperez/princess-snake-project.git",
   "author": "Almudena",
   "license": "MIT",
-  "devDependencies": {
-    "tsconfig.json": "^1.0.10"
-  },
+
   "dependencies": {
     "eslint": "^8.5.0",
     "lodash": "^4.17.21",

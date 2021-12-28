@@ -459,10 +459,9 @@ function hmrAcceptRun(bundle, id) {
 }
 
 },{}],"Yx9M4":[function(require,module,exports) {
-// import { Actor, IActor } from "./actors/Actor";
 // //import { Crown } from "./actors/Crown";
-// import { Snake } from "./actors/Snake";
-// import { FPSViewer } from "./actors/FPSViewer";
+var _snake = require("./actors/Snake");
+var _fpsviewer = require("./actors/FPSViewer");
 // //import { Map } from "./actors/Map";
 //import { Pacman } from "./actors/Pacman";
 // //import { Circuit, createCircuit } from "./state/Circuit";
@@ -472,63 +471,153 @@ window.onload = ()=>{
     var canvas = document.getElementById("canvas");
     var ctx = canvas.getContext("2d");
     //serpiente
-    ctx.fillStyle = 'green';
-    ctx.fillRect(10, 10, 100, 100);
-    //corona
-    ctx.fillStyle = 'pink';
-    ctx.fillRect(200, 200, 25, 25);
-} // }
- // window.onload = () => {
- //     var canvas = document.getElementById('canvas');
- //     console.log(canvas)
- //     var ctx = canvas.getContext('2d');
- //     //serpiente
- //     ctx.fillStyle = 'green';
- //     ctx.fillRect(50, 50, 100, 100);
- //     //corona
- //     ctx.fillStyle = 'pink';
- //     ctx.fillRect(200, 200, 25, 25);
- // }
- // 	let fps = new FPSViewer({ x: 5, y: 15 });
- // 	//let snake = new Snake { x: 100, y: 100 }, MAP_A);
- // 	//let carB = new Car({ x: 300, y: 300 }, MAP_B);
- // 	//let cars = [carA];
- // 	//createCircuit(snake);
- // 	//pasar al array snake y crown cuando esten llevados a cabo
- // 	let actors: Array<IActor> = [fps];
- // 	let lastFrame = 0;
- // 	const render = (time: number) => {
- // 		let delta = (time - lastFrame) / 1000;
- // 		lastFrame = time;
- // 		actors.forEach((e) => e.update(delta));
- // 		ctx.clearRect(0, 0, canvas.width, canvas.height);
- // 		actors.forEach((e) => {
- // 			ctx.save();
- // 			e.draw(delta, ctx);
- // 			ctx.restore();
- // 		});
- // 		window.requestAnimationFrame(render);
- //};
- // 	window.requestAnimationFrame(render);
- // 	document.body.addEventListener("keydown", (e) => {
- // 		// console.log(e.key);
- // 		actors.forEach((actor) => {
- // 			if (actor.keyboard_event_down) {
- // 				actor.keyboard_event_down(e.key);
- // 			}
- // 		});
- // 	});
- // 	document.body.addEventListener("keyup", (e) => {
- // 		// console.log(e.key);
- // 		actors.forEach((actor) => {
- // 			if (actor.keyboard_event_up) {
- // 				actor.keyboard_event_up(e.key);
- // 			}
- // 		});
- // 	});
- // };
-;
+    // ctx.fillStyle = 'green';
+    // ctx.fillRect(10, 10, 100, 100);
+    // //corona
+    // ctx.fillStyle = 'pink';
+    // ctx.fillRect(200, 200, 25, 25);
+    let fps = new _fpsviewer.FPSViewer({
+        x: 5,
+        y: 15
+    });
+    let snake = new _snake.Snake({
+        x: 100,
+        y: 100
+    });
+    //createCircuit(snake);
+    let actors = [
+        fps,
+        snake, 
+    ];
+    let lastFrame = 0;
+    const render = (time)=>{
+        let delta = (time - lastFrame) / 1000;
+        console.log(actors.length);
+        lastFrame = time;
+        actors.forEach((e)=>e.update(delta)
+        );
+        //ctx.clearRect(0, 0, canvas.width, canvas.height);
+        actors.forEach((e)=>{
+            //save antes de pintar gaurda una foto del canvas y despues pinta
+            ctx.save();
+            e.draw(delta, ctx);
+            //me traigo el canvas que habia guardado antes despues de pintar
+            ctx.restore();
+        });
+        window.requestAnimationFrame(render);
+    };
+    window.requestAnimationFrame(render);
+    document.body.addEventListener("keydown", (e)=>{
+        actors.forEach((actor)=>{
+            if (actor.keyboard_event_down) actor.keyboard_event_down(e.key);
+        });
+    });
+};
 
-},{}]},["iRSrf","Yx9M4"], "Yx9M4", "parcelRequiree018")
+},{"./actors/Snake":"1HxGR","./actors/FPSViewer":"jhSnX"}],"1HxGR":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Snake", ()=>Snake
+) // import { Actor, IActor } from "./Actor";
+ // import { Point } from "../types/Point";
+ // import { angleToRad } from "../utils/angleToRad";
+ // import { checkLimits } from "../utils/checkLimits";
+ // import { snakekey, KeyboardMap } from "../utils/keyboardMap";
+ // const ferrariImg = require("../assets/ferrari.png");
+;
+var _actor = require("./Actor");
+class Snake extends _actor.Actor {
+    constructor(initialPos, size = {
+        w: 50,
+        h: 50
+    }){
+        super(initialPos);
+        this.snakeSize = size;
+        this.snakeColor = "green";
+        this.angle = 0;
+    }
+    update(delta) {
+        console.log(this.angle);
+    }
+    draw(delta1, ctx) {
+        ctx.fillStyle = this.snakeColor;
+        ctx.fillRect(this.position.x, this.position.y, this.snakeSize.w, this.snakeSize.h);
+    }
+    keyboard_event(key) {
+        //hay que indicar == para que no lo iguale
+        if (key == "ArrowLeft") this.angle -= 5;
+        else if (key == "ArrowRight") this.angle += 5;
+        else if (key == "ArrowUp") ;
+        else "ArrowDown";
+    }
+}
+
+},{"./Actor":"7cXFN","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"7cXFN":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Actor", ()=>Actor
+);
+class Actor {
+    constructor(position){
+        this.position = position;
+    }
+    update(delta) {
+    }
+    draw(delta1, ctx) {
+    }
+    keyboard_event(key) {
+    }
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"ciiiV":[function(require,module,exports) {
+exports.interopDefault = function(a) {
+    return a && a.__esModule ? a : {
+        default: a
+    };
+};
+exports.defineInteropFlag = function(a) {
+    Object.defineProperty(a, '__esModule', {
+        value: true
+    });
+};
+exports.exportAll = function(source, dest) {
+    Object.keys(source).forEach(function(key) {
+        if (key === 'default' || key === '__esModule' || dest.hasOwnProperty(key)) return;
+        Object.defineProperty(dest, key, {
+            enumerable: true,
+            get: function() {
+                return source[key];
+            }
+        });
+    });
+    return dest;
+};
+exports.export = function(dest, destName, get) {
+    Object.defineProperty(dest, destName, {
+        enumerable: true,
+        get: get
+    });
+};
+
+},{}],"jhSnX":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "FPSViewer", ()=>FPSViewer
+);
+var _actor = require("./Actor");
+class FPSViewer extends _actor.Actor {
+    update() {
+    }
+    keryboard_event() {
+    }
+    draw(delta, ctx) {
+        const fps = (1 / delta).toFixed(2);
+        ctx.font = "15px Arial";
+        ctx.fillStyle = "black";
+        ctx.fillText(`FPS:${fps}`, this.position.x, this.position.y);
+    }
+}
+
+},{"./Actor":"7cXFN","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}]},["iRSrf","Yx9M4"], "Yx9M4", "parcelRequiree018")
 
 //# sourceMappingURL=index.abe0c6a4.js.map

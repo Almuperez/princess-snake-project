@@ -462,6 +462,7 @@ function hmrAcceptRun(bundle, id) {
 // //import { Crown } from "./actors/Crown";
 var _snake = require("./actors/Snake");
 var _fpsviewer = require("./actors/FPSViewer");
+var _crown2 = require("./actors/Crown2");
 // //import { Map } from "./actors/Map";
 //import { Pacman } from "./actors/Pacman";
 // //import { Circuit, createCircuit } from "./state/Circuit";
@@ -470,33 +471,36 @@ var _fpsviewer = require("./actors/FPSViewer");
 window.onload = ()=>{
     var canvas = document.getElementById("canvas");
     var ctx = canvas.getContext("2d");
-    //serpiente
-    // ctx.fillStyle = 'green';
-    // ctx.fillRect(10, 10, 100, 100);
-    // //corona
-    // ctx.fillStyle = 'pink';
-    // ctx.fillRect(200, 200, 25, 25);
     let fps = new _fpsviewer.FPSViewer({
         x: 5,
         y: 15
     });
     let snake = new _snake.Snake({
+        x: 0,
+        y: 0
+    });
+    let crown = new _crown2.Crown({
         x: 100,
-        y: 100
+        y: 200
     });
     //createCircuit(snake);
     let actors = [
         fps,
-        snake, 
+        snake,
+        crown
     ];
     let lastFrame = 0;
     const render = (time)=>{
+        actors = [
+            fps,
+            snake
+        ];
         let delta = (time - lastFrame) / 1000;
-        console.log(actors.length);
+        //console.log(actors.length)
         lastFrame = time;
         actors.forEach((e)=>e.update(delta)
         );
-        //ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
         actors.forEach((e)=>{
             //save antes de pintar gaurda una foto del canvas y despues pinta
             ctx.save();
@@ -514,41 +518,52 @@ window.onload = ()=>{
     });
 };
 
-},{"./actors/Snake":"1HxGR","./actors/FPSViewer":"jhSnX"}],"1HxGR":[function(require,module,exports) {
+},{"./actors/Snake":"1HxGR","./actors/FPSViewer":"jhSnX","./actors/Crown2":"deBDO"}],"1HxGR":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Snake", ()=>Snake
-) // import { Actor, IActor } from "./Actor";
- // import { Point } from "../types/Point";
- // import { angleToRad } from "../utils/angleToRad";
- // import { checkLimits } from "../utils/checkLimits";
- // import { snakekey, KeyboardMap } from "../utils/keyboardMap";
- // const ferrariImg = require("../assets/ferrari.png");
-;
+);
 var _actor = require("./Actor");
 class Snake extends _actor.Actor {
+    // origin: Point
+    // maxSpeed: number;
+    // speed: Point;
     constructor(initialPos, size = {
-        w: 50,
+        w: 100,
         h: 50
-    }){
+    }, initialMaxSpeed = 10){
         super(initialPos);
         this.snakeSize = size;
         this.snakeColor = "green";
-        this.angle = 0;
+    // this.origin = { x:initialPos.x, y: initialPos.y };
+    // this.maxSpeed = initialMaxSpeed * 10;
+    // this.speed = { x: this.maxSpeed, y: 0};
     }
     update(delta) {
-        console.log(this.angle);
+    //x position
+    // let newPosx = this.origin.x + this.speed.x * delta;
+    // if (newPosx < 1024 && newPosx >= 0){
+    //     this.origin.x = newPosx
+    // }
+    // //y position
+    // let newposy = this.origin.y + this.speed.y * delta;
+    // this.origin.y = newposy;
+    }
+    keyboard_event_down(key) {
+        //hay que indicar == para que no lo iguale
+        if (key == "ArrowLeft") this.position.x -= 30;
+        else if (key == "ArrowRight") this.position.x += 30;
+        else if (key == "ArrowUp") this.position.y -= 30;
+        else if (key == "ArrowDown") this.position.y += 30;
     }
     draw(delta1, ctx) {
         ctx.fillStyle = this.snakeColor;
-        ctx.fillRect(this.position.x, this.position.y, this.snakeSize.w, this.snakeSize.h);
-    }
-    keyboard_event(key) {
-        //hay que indicar == para que no lo iguale
-        if (key == "ArrowLeft") this.angle -= 5;
-        else if (key == "ArrowRight") this.angle += 5;
-        else if (key == "ArrowUp") ;
-        else "ArrowDown";
+        //rotar cuadrado. translate tiene que estar por encima de rotate
+        ctx.translate(this.position.x, this.position.y);
+        //rotar canvas
+        // ctx.rotate(angleToRad(this.angle));
+        ctx.fillRect(//es negativo para desplazarme entre x e y 
+        -this.snakeSize.h / 2, -this.snakeSize.w / 2, this.snakeSize.h, this.snakeSize.w);
     }
 }
 
@@ -615,6 +630,31 @@ class FPSViewer extends _actor.Actor {
         ctx.font = "15px Arial";
         ctx.fillStyle = "black";
         ctx.fillText(`FPS:${fps}`, this.position.x, this.position.y);
+    }
+}
+
+},{"./Actor":"7cXFN","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"deBDO":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Crown", ()=>Crown
+);
+var _actor = require("./Actor");
+class Crown extends _actor.Actor {
+    constructor(initialPos, size = {
+        w: 50,
+        h: 50
+    }){
+        super(initialPos);
+        this.crownSize = size;
+        this.crownColor = "pink";
+    }
+    update(delta) {
+    }
+    keyboard_event_down(key) {
+    }
+    draw(delta1, ctx) {
+        ctx.fillStyle = this.crownColor;
+        ctx.fillRect(-this.crownSize.h / 2, -this.crownSize.w / 2, this.crownSize.w, this.crownSize.h);
     }
 }
 

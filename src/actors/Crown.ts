@@ -14,11 +14,11 @@ export class Snake extends Actor implements IActor {
     // maxSpeed: number;
     // speed: Point;
     constructor(
-        initialPos: Point, size: Size ={w: 100, h: 50}, initialMaxSpeed = 10
+        initialPos: Point, size: Size ={w: 50, h: 50}, initialMaxSpeed = 10
         ){
         super(initialPos);
         this.snakeSize = size;
-        this.snakeColor = "green";
+        this.snakeColor = "pink";
         // this.origin = { x:initialPos.x, y: initialPos.y };
         // this.maxSpeed = initialMaxSpeed * 10;
         // this.speed = { x: this.maxSpeed, y: 0};

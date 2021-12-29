@@ -459,12 +459,11 @@ function hmrAcceptRun(bundle, id) {
 }
 
 },{}],"Yx9M4":[function(require,module,exports) {
-// //import { Crown } from "./actors/Crown";
 var _snake = require("./actors/Snake");
+var _crown = require("./actors/Crown");
 var _fpsviewer = require("./actors/FPSViewer");
-var _crown2 = require("./actors/Crown2");
+var _pacman = require("./actors/Pacman");
 // //import { Map } from "./actors/Map";
-//import { Pacman } from "./actors/Pacman";
 // //import { Circuit, createCircuit } from "./state/Circuit";
 // import { MAP_A, MAP_B } from "./utils/keyboardMap";
 //import { createTextChangeRange } from "typescript";
@@ -479,33 +478,46 @@ window.onload = ()=>{
         x: 0,
         y: 0
     });
-    let crown = new _crown2.Crown({
+    let pacman = new _pacman.Pacman({
         x: 100,
-        y: 200
+        y: 300
     });
     //createCircuit(snake);
     let actors = [
         fps,
         snake,
-        crown
+        pacman,
+        new _crown.Crown({
+            x: 100,
+            y: 200
+        }),
+        new _crown.Crown({
+            x: 300,
+            y: 300
+        }),
+        new _crown.Crown({
+            x: 500,
+            y: 400
+        }),
+        new _crown.Crown({
+            x: 100,
+            y: 700
+        }),
+        new _crown.Crown({
+            x: 400,
+            y: 700
+        }), 
     ];
     let lastFrame = 0;
     const render = (time)=>{
-        actors = [
-            fps,
-            snake
-        ];
         let delta = (time - lastFrame) / 1000;
-        //console.log(actors.length)
         lastFrame = time;
         actors.forEach((e)=>e.update(delta)
         );
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         actors.forEach((e)=>{
-            //save antes de pintar gaurda una foto del canvas y despues pinta
             ctx.save();
             e.draw(delta, ctx);
-            //me traigo el canvas que habia guardado antes despues de pintar
             ctx.restore();
         });
         window.requestAnimationFrame(render);
@@ -518,7 +530,7 @@ window.onload = ()=>{
     });
 };
 
-},{"./actors/Snake":"1HxGR","./actors/FPSViewer":"jhSnX","./actors/Crown2":"deBDO"}],"1HxGR":[function(require,module,exports) {
+},{"./actors/Snake":"1HxGR","./actors/FPSViewer":"jhSnX","./actors/Crown":"8xuAo","./actors/Pacman":"hnMNm"}],"1HxGR":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Snake", ()=>Snake
@@ -528,26 +540,24 @@ class Snake extends _actor.Actor {
     // origin: Point
     // maxSpeed: number;
     // speed: Point;
-    constructor(initialPos, size = {
+    constructor(initialPos, color = "green", size = {
         w: 100,
         h: 50
-    }, initialMaxSpeed = 10){
+    }, initalMaxSpeed = 10){
         super(initialPos);
         this.snakeSize = size;
-        this.snakeColor = "green";
-    // this.origin = { x:initialPos.x, y: initialPos.y };
-    // this.maxSpeed = initialMaxSpeed * 10;
+        this.snakeColor = color;
+    // this.origin = {x: initialPos.x, y: initialPos.y};
+    // this.maxSpeed = initalMaxSpeed * 10;
     // this.speed = { x: this.maxSpeed, y: 0};
     }
     update(delta) {
-    //x position
-    // let newPosx = this.origin.x + this.speed.x * delta;
-    // if (newPosx < 1024 && newPosx >= 0){
-    //     this.origin.x = newPosx
-    // }
-    // //y position
-    // let newposy = this.origin.y + this.speed.y * delta;
-    // this.origin.y = newposy;
+    //   let newPosX = this.origin.x + this.speed.x * delta;
+    //   if(newPosX < 1024 && newPosX >= 0){
+    //       this.origin.x = newPosX
+    //   }
+    //   let newPosY = this.position.y + this.speed.y * delta;
+    //   this.origin.y = newPosY
     }
     keyboard_event_down(key) {
         //hay que indicar == para que no lo iguale
@@ -555,15 +565,48 @@ class Snake extends _actor.Actor {
         else if (key == "ArrowRight") this.position.x += 30;
         else if (key == "ArrowUp") this.position.y -= 30;
         else if (key == "ArrowDown") this.position.y += 30;
+    // switch(key) {
+    //     case `ArrowRight`:
+    //         console.log("right");
+    //         this.speed.x += this.maxSpeed;
+    //         this.speed.y = 0;
+    //         break;
+    //     case `ArrowLeft`:
+    //         console.log("left");
+    //         this.speed.x -= this.maxSpeed;
+    //         this.speed.y = 0;
+    //         break;
+    //     case`ArrowUp`:
+    //         console.log("Up");
+    //         this.speed.x -= this.maxSpeed;
+    //         this.speed.y = 0;
+    //     case `ArrowDown`:
+    //         console.log("Down");
+    //         this.speed.y += this.maxSpeed;
+    //         this.speed.x = 0;
+    //         break;
+    // }
     }
     draw(delta1, ctx) {
+        // let origin = this.origin;
+        // let snakeSize = this.snakeSize;
+        // let direction = 0;
+        // if(this.speed.x != 0 && this.speed.x < 0){
+        //     direction = 180;
+        // }
+        // if (this.speed.y != 0 && this.speed.y < 0){
+        //     direction = -90;
+        // }
+        // if (this.speed.y != 0 && this.speed.y > 0){
+        //     direction = 90;
+        // }
         ctx.fillStyle = this.snakeColor;
-        //rotar cuadrado. translate tiene que estar por encima de rotate
         ctx.translate(this.position.x, this.position.y);
-        //rotar canvas
         // ctx.rotate(angleToRad(this.angle));
         ctx.fillRect(//es negativo para desplazarme entre x e y 
-        -this.snakeSize.h / 2, -this.snakeSize.w / 2, this.snakeSize.h, this.snakeSize.w);
+        -this.snakeSize.h / 2, -this.snakeSize.w / 2, // this.position.x,
+        // this.position.y,
+        this.snakeSize.h, this.snakeSize.w);
     }
 }
 
@@ -633,13 +676,16 @@ class FPSViewer extends _actor.Actor {
     }
 }
 
-},{"./Actor":"7cXFN","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"deBDO":[function(require,module,exports) {
+},{"./Actor":"7cXFN","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"8xuAo":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Crown", ()=>Crown
 );
 var _actor = require("./Actor");
 class Crown extends _actor.Actor {
+    //origin: Point;
+    // maxSpeed: number;
+    // speed: Point;
     constructor(initialPos, size = {
         w: 50,
         h: 50
@@ -647,14 +693,129 @@ class Crown extends _actor.Actor {
         super(initialPos);
         this.crownSize = size;
         this.crownColor = "pink";
+    // this.origin = { x:initialPos.x, y: initialPos.y };
+    // this.maxSpeed = initialMaxSpeed * 10;
+    // this.speed = { x: this.maxSpeed, y: 0};
     }
     update(delta) {
+    //x position
+    // let newPosx = this.origin.x + this.speed.x * delta;
+    // if (newPosx < 1024 && newPosx >= 0){
+    //     this.origin.x = newPosx
+    // }
+    // //y position
+    // let newposy = this.origin.y + this.speed.y * delta;
+    // this.origin.y = newposy;
     }
     keyboard_event_down(key) {
+    //hay que indicar == para que no lo iguale
+    // if(key == "ArrowLeft"){
+    //     this.position.x -= 30
+    // }else if ((key == "ArrowRight")) {
+    //     this.position.x += 30
+    // } else if ((key == "ArrowUp")) {
+    //     this.position.y -=30
+    // }else if ((key == "ArrowDown")){
+    //     this.position.y += 30;
+    // }
     }
     draw(delta1, ctx) {
         ctx.fillStyle = this.crownColor;
-        ctx.fillRect(-this.crownSize.h / 2, -this.crownSize.w / 2, this.crownSize.w, this.crownSize.h);
+        //rotar cuadrado. translate tiene que estar por encima de rotate
+        ctx.translate(this.position.x, this.position.y);
+        //rotar canvas
+        // ctx.rotate(angleToRad(this.angle));
+        ctx.fillRect(//es negativo para desplazarme entre x e y 
+        -this.crownSize.h / 2, -this.crownSize.w / 2, this.crownSize.h, this.crownSize.w);
+    }
+}
+
+},{"./Actor":"7cXFN","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"hnMNm":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Pacman", ()=>Pacman
+);
+var _actor = require("./Actor");
+class Pacman extends _actor.Actor {
+    constructor(initialPos, color = "yellow", initialMaxSpeed = 10){
+        super(initialPos);
+        this.pacmanSize = 30;
+        //this.mouthOpen = 20;
+        this.origin = {
+            x: initialPos.x,
+            y: initialPos.y
+        };
+        this.color = color;
+        this.maxSpeed = initialMaxSpeed * 10;
+        this.speed = {
+            x: this.maxSpeed,
+            y: 0
+        };
+    }
+    update(delta) {
+        //this.mouthOpen += 0.8;
+        // Set X position
+        let newPosX = this.origin.x + this.speed.x * delta;
+        if (newPosX < 1024 && newPosX >= 0) this.origin.x = newPosX;
+        // Set Y position
+        let newPosY = this.origin.y + this.speed.y * delta;
+        this.origin.y = newPosY;
+    }
+    keyboard_event_down(key) {
+        switch(key){
+            case `ArrowRight`:
+                console.log("right");
+                this.speed.x = this.maxSpeed;
+                this.speed.y = 0;
+                break;
+            case `ArrowLeft`:
+                console.log("left");
+                this.speed.x = -this.maxSpeed;
+                this.speed.y = 0;
+                break;
+            case `ArrowUp`:
+                console.log("up");
+                this.speed.y = -this.maxSpeed;
+                this.speed.x = 0;
+                break;
+            case `ArrowDown`:
+                console.log("down");
+                this.speed.y = this.maxSpeed;
+                this.speed.x = 0;
+                break;
+        }
+    }
+    draw(delta1, ctx) {
+        let origin = this.origin;
+        let pacmanSize = this.pacmanSize;
+        //let mouthOpen = this.mouthOpen;
+        //let open = 20 * Math.sin(10 * this.mouthOpen * delta) + 40;
+        // Controlamos la dirección del PACMAN
+        let direction = 0;
+        if (this.speed.x != 0 && this.speed.x < 0) direction = 180;
+        if (this.speed.y != 0 && this.speed.y < 0) direction = -90;
+        if (this.speed.y != 0 && this.speed.y > 0) direction = 90;
+        ctx.fillStyle = "yello";
+        ctx.translate(this.position.x, this.position.y);
+        ctx.fillRect(this.origin.x, this.origin.y, 100, 300);
+    // ctx.strokeStyle = "black";
+    // ctx.lineWidth = 4;
+    // ctx.save();
+    // ctx.translate(origin.x, origin.y);
+    // ctx.beginPath();
+    // ctx.font = "18px Arial";
+    // ctx.fillText(`SX:${this.speed.x} SY:${this.speed.y}`, 40, 0);
+    // ctx.rotate(angleToRad(direction));
+    // ctx.fillStyle = this.color;
+    // ctx.arc(0, 0, pacmanSize, angleToRad(-open), angleToRad(open), true);
+    // ctx.lineTo(0, 0);
+    // // ctx.lineTo(origin.x + pacmanSize, origin.y + mouthOpen);
+    // // ctx.moveTo(origin.x, origin.y);
+    // // ctx.lineTo(origin.x + pacmanSize, origin.y - mouthOpen);
+    // ctx.closePath();
+    // ctx.stroke();
+    // ctx.fill();
+    // ctx.restore();
     }
 }
 

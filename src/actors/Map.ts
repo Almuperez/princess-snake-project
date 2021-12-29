@@ -1,4 +1,4 @@
-// import { Actor } from "./Actor";
+// import { Actor, IActor } from "./Actor";
 
 // const level = [
 // 	"WWWWWWWWWWWWWWWWWWWWWWWWWWWW",
@@ -34,7 +34,7 @@
 // 	"WWWWWWWWWWWWWWWWWWWWWWWWWWWW",
 // ].map((f) => f.split(""));
 
-// export class Map extends Actor {
+// export class Map extends Actor implements IActor {
 // 	update() {}
 // 	keyboard_event() {}
 // 	draw(delta: number, ctx: CanvasRenderingContext2D) {

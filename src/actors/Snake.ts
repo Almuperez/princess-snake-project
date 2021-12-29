@@ -14,27 +14,24 @@ export class Snake extends Actor implements IActor {
     // maxSpeed: number;
     // speed: Point;
     constructor(
-        initialPos: Point, size: Size ={w: 100, h: 50}, initialMaxSpeed = 10
-        ){
+        initialPos: Point, color = "green", size: Size ={w: 100, h: 50}, initalMaxSpeed = 10){
         super(initialPos);
         this.snakeSize = size;
-        this.snakeColor = "green";
-        // this.origin = { x:initialPos.x, y: initialPos.y };
-        // this.maxSpeed = initialMaxSpeed * 10;
+        this.snakeColor = color;
+        // this.origin = {x: initialPos.x, y: initialPos.y};
+        // this.maxSpeed = initalMaxSpeed * 10;
         // this.speed = { x: this.maxSpeed, y: 0};
     };
 
     update(delta: number){
-        //x position
+    //   let newPosX = this.origin.x + this.speed.x * delta;
+    //   if(newPosX < 1024 && newPosX >= 0){
+    //       this.origin.x = newPosX
+    //   }
 
-        // let newPosx = this.origin.x + this.speed.x * delta;
-        // if (newPosx < 1024 && newPosx >= 0){
-        //     this.origin.x = newPosx
-        // }
+    //   let newPosY = this.position.y + this.speed.y * delta;
+    //   this.origin.y = newPosY
 
-        // //y position
-        // let newposy = this.origin.y + this.speed.y * delta;
-        // this.origin.y = newposy;
     }
 
     keyboard_event_down(key: string) {
@@ -54,21 +51,55 @@ export class Snake extends Actor implements IActor {
             this.position.y += 30;
 
         }
+        // switch(key) {
+        //     case `ArrowRight`:
+        //         console.log("right");
+        //         this.speed.x += this.maxSpeed;
+        //         this.speed.y = 0;
+        //         break;
+        //     case `ArrowLeft`:
+        //         console.log("left");
+        //         this.speed.x -= this.maxSpeed;
+        //         this.speed.y = 0;
+        //         break;
+        //     case`ArrowUp`:
+        //         console.log("Up");
+        //         this.speed.x -= this.maxSpeed;
+        //         this.speed.y = 0;
+        //     case `ArrowDown`:
+        //         console.log("Down");
+        //         this.speed.y += this.maxSpeed;
+        //         this.speed.x = 0;
+        //         break;
+        // }
         
     }
     
-
-
     draw(delta: number, ctx: CanvasRenderingContext2D){
+
+        // let origin = this.origin;
+        // let snakeSize = this.snakeSize;
+        
+        // let direction = 0;
+        // if(this.speed.x != 0 && this.speed.x < 0){
+        //     direction = 180;
+        // }
+        // if (this.speed.y != 0 && this.speed.y < 0){
+        //     direction = -90;
+        // }
+        // if (this.speed.y != 0 && this.speed.y > 0){
+        //     direction = 90;
+        // }
+
         ctx.fillStyle = this.snakeColor;
-    //rotar cuadrado. translate tiene que estar por encima de rotate
         ctx.translate(this.position.x, this.position.y);
-    //rotar canvas
         // ctx.rotate(angleToRad(this.angle));
         ctx.fillRect(
     //es negativo para desplazarme entre x e y 
             -this.snakeSize.h/ 2,
             -this.snakeSize.w/ 2,
+            // this.position.x,
+            // this.position.y,
             this.snakeSize.h,
             this.snakeSize.w,
             );

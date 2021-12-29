@@ -7,18 +7,20 @@ import { checkLimits } from "../utils/checkLimits";
 
 type Size = { w: number; h:number };
 
-export class Snake extends Actor implements IActor {
-    snakeSize: Size;
-    snakeColor: string;
-    // origin: Point
+export class Crown extends Actor implements IActor {
+    crownSize: Size;
+    crownColor: string;
+    //origin: Point;
     // maxSpeed: number;
     // speed: Point;
     constructor(
-        initialPos: Point, size: Size ={w: 50, h: 50}, initialMaxSpeed = 10
+        initialPos: Point, size: Size ={w: 50, h: 50},
         ){
         super(initialPos);
-        this.snakeSize = size;
-        this.snakeColor = "pink";
+        this.crownSize = size;
+        this.crownColor = "pink";
+        
+
         // this.origin = { x:initialPos.x, y: initialPos.y };
         // this.maxSpeed = initialMaxSpeed * 10;
         // this.speed = { x: this.maxSpeed, y: 0};
@@ -39,38 +41,38 @@ export class Snake extends Actor implements IActor {
 
     keyboard_event_down(key: string) {
         //hay que indicar == para que no lo iguale
-        if(key == "ArrowLeft"){
-            this.position.x -= 30
+        // if(key == "ArrowLeft"){
+        //     this.position.x -= 30
 
-        }else if ((key == "ArrowRight")) {
-            this.position.x += 30
+        // }else if ((key == "ArrowRight")) {
+        //     this.position.x += 30
 
-        } else if ((key == "ArrowUp")) {
+        // } else if ((key == "ArrowUp")) {
 
-            this.position.y -=30
+        //     this.position.y -=30
 
-        }else if ((key == "ArrowDown")){
+        // }else if ((key == "ArrowDown")){
 
-            this.position.y += 30;
+        //     this.position.y += 30;
 
-        }
+        // }
         
     }
     
 
 
     draw(delta: number, ctx: CanvasRenderingContext2D){
-        ctx.fillStyle = this.snakeColor;
+        ctx.fillStyle = this.crownColor;
     //rotar cuadrado. translate tiene que estar por encima de rotate
-        ctx.translate(this.position.x, this.position.y);
+       ctx.translate(this.position.x, this.position.y);
     //rotar canvas
         // ctx.rotate(angleToRad(this.angle));
         ctx.fillRect(
     //es negativo para desplazarme entre x e y 
-            -this.snakeSize.h/ 2,
-            -this.snakeSize.w/ 2,
-            this.snakeSize.h,
-            this.snakeSize.w,
+            -this.crownSize.h/ 2,
+            -this.crownSize.w/ 2,
+            this.crownSize.h,
+            this.crownSize.w,
             );
     }
 

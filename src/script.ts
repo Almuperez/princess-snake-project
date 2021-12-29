@@ -2,6 +2,7 @@ import { Actor, IActor } from "./actors/Actor";
 import { Snake } from "./actors/Snake";
 import { Crown } from "./actors/Crown";
 import { FPSViewer } from "./actors/FPSViewer";
+import { createGameManager, Manager } from "./actors/GameManager"
 
 import { Pacman } from "./actors/Pacman";
 // //import { Map } from "./actors/Map";
@@ -15,19 +16,15 @@ window.onload = () => {
 
   let fps = new FPSViewer({ x: 5, y: 15 });
   let snake = new Snake({ x: 0, y: 0 });
-  let pacman = new Pacman ({x: 100, y: 300}) ;
+  let pacman = new Pacman({ x: 100, y: 300 });
+  let crownArray = [new Crown(), new Crown(), new Crown(), new Crown()]
 
-  //createCircuit(snake);
+  createGameManager(snake);
 
   let actors: Array<IActor> = [
     fps,
+    ...crownArray,
     snake,
-    pacman,
-    new Crown({ x: 100, y: 200 }),
-    new Crown({ x: 300, y: 300 }),
-    new Crown({ x: 500, y: 400 }),
-    new Crown({ x: 100, y: 700 }),
-    new Crown({ x: 400, y: 700 }),
   ];
 
   let lastFrame = 0;

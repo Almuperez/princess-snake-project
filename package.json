@@ -10,8 +10,8 @@
   "repository": "git@github.com:Almuperez/princess-snake-project.git",
   "author": "Almudena",
   "license": "MIT",
-
   "dependencies": {
+    "@types/lodash": "^4.14.178",
     "eslint": "^8.5.0",
     "lodash": "^4.17.21",
     "parcel": "^2.0.1",

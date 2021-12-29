@@ -2,13 +2,7 @@ import { Actor, IActor } from "./actors/Actor";
 import { Snake } from "./actors/Snake";
 import { Crown } from "./actors/Crown";
 import { FPSViewer } from "./actors/FPSViewer";
-import { createGameManager, Manager } from "./actors/GameManager"
-
-import { Pacman } from "./actors/Pacman";
-// //import { Map } from "./actors/Map";
-// //import { Circuit, createCircuit } from "./state/Circuit";
-// import { MAP_A, MAP_B } from "./utils/keyboardMap";
-//import { createTextChangeRange } from "typescript";
+import { createGameManager, Manager } from "./state/GameManager";
 
 window.onload = () => {
   var canvas = document.getElementById("canvas") as HTMLCanvasElement;
@@ -16,16 +10,11 @@ window.onload = () => {
 
   let fps = new FPSViewer({ x: 5, y: 15 });
   let snake = new Snake({ x: 0, y: 0 });
-  let pacman = new Pacman({ x: 100, y: 300 });
-  let crownArray = [new Crown(), new Crown(), new Crown(), new Crown()]
+  let crownArray = [new Crown(), new Crown(), new Crown(), new Crown()];
 
   createGameManager(snake);
 
-  let actors: Array<IActor> = [
-    fps,
-    ...crownArray,
-    snake,
-  ];
+  let actors: Array<IActor> = [fps, ...crownArray, snake];
 
   let lastFrame = 0;
   const render = (time: number) => {

@@ -462,12 +462,7 @@ function hmrAcceptRun(bundle, id) {
 var _snake = require("./actors/Snake");
 var _crown = require("./actors/Crown");
 var _fpsviewer = require("./actors/FPSViewer");
-var _gameManager = require("./actors/GameManager");
-var _pacman = require("./actors/Pacman");
-// //import { Map } from "./actors/Map";
-// //import { Circuit, createCircuit } from "./state/Circuit";
-// import { MAP_A, MAP_B } from "./utils/keyboardMap";
-//import { createTextChangeRange } from "typescript";
+var _gameManager = require("./state/GameManager");
 window.onload = ()=>{
     var canvas = document.getElementById("canvas");
     var ctx = canvas.getContext("2d");
@@ -479,10 +474,6 @@ window.onload = ()=>{
         x: 0,
         y: 0
     });
-    let pacman = new _pacman.Pacman({
-        x: 100,
-        y: 300
-    });
     let crownArray = [
         new _crown.Crown(),
         new _crown.Crown(),
@@ -493,7 +484,7 @@ window.onload = ()=>{
     let actors = [
         fps,
         ...crownArray,
-        snake, 
+        snake
     ];
     let lastFrame = 0;
     const render = (time)=>{
@@ -517,7 +508,7 @@ window.onload = ()=>{
     });
 };
 
-},{"./actors/Snake":"1HxGR","./actors/FPSViewer":"jhSnX","./actors/Crown":"8xuAo","./actors/Pacman":"hnMNm","./actors/GameManager":"dh63G"}],"1HxGR":[function(require,module,exports) {
+},{"./actors/Snake":"1HxGR","./actors/FPSViewer":"jhSnX","./actors/Crown":"8xuAo","./state/GameManager":"6Z73H"}],"1HxGR":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Snake", ()=>Snake
@@ -571,59 +562,12 @@ class Snake extends _actor.Actor {
                 break;
         }
     }
-    // keyboard_event_down(key: string) {
-    //     //hay que indicar == para que no lo iguale
-    //     // if (key == "ArrowLeft") {
-    //     //     this.position.x -= 30
-    //     // } else if ((key == "ArrowRight")) {
-    //     //     this.position.x += 30
-    //     // } else if ((key == "ArrowUp")) {
-    //     //     this.position.y -= 30
-    //     // } else if ((key == "ArrowDown")) {
-    //     //     this.position.y += 30;
-    //     // }
-    //     // switch(key) {
-    //     //     case `ArrowRight`:
-    //     //         console.log("right");
-    //     //         this.speed.x += this.maxSpeed;
-    //     //         this.speed.y = 0;
-    //     //         break;
-    //     //     case `ArrowLeft`:
-    //     //         console.log("left");
-    //     //         this.speed.x -= this.maxSpeed;
-    //     //         this.speed.y = 0;
-    //     //         break;
-    //     //     case`ArrowUp`:
-    //     //         console.log("Up");
-    //     //         this.speed.x -= this.maxSpeed;
-    //     //         this.speed.y = 0;
-    //     //     case `ArrowDown`:
-    //     //         console.log("Down");
-    //     //         this.speed.y += this.maxSpeed;
-    //     //         this.speed.x = 0;
-    //     //         break;
-    //     // }
-    // }
     draw(delta1, ctx) {
-        // let origin = this.origin;
-        // let snakeSize = this.snakeSize;
-        // let direction = 0;
-        // if(this.speed.x != 0 && this.speed.x < 0){
-        //     direction = 180;
-        // }
-        // if (this.speed.y != 0 && this.speed.y < 0){
-        //     direction = -90;
-        // }
-        // if (this.speed.y != 0 && this.speed.y > 0){
-        //     direction = 90;
-        // }
         ctx.fillStyle = this.snakeColor;
         ctx.translate(this.position.x, this.position.y);
         // ctx.rotate(angleToRad(this.angle));
-        ctx.fillRect(//es negativo para desplazarme entre x e y 
-        -this.snakeSize.h / 2, -this.snakeSize.w / 2, // this.position.x,
-        // this.position.y,
-        this.snakeSize.h, this.snakeSize.w);
+        ctx.fillRect(//es negativo para desplazarme entre x e y
+        -this.snakeSize.h / 2, -this.snakeSize.w / 2, this.snakeSize.h, this.snakeSize.w);
     }
 }
 
@@ -702,9 +646,6 @@ var _actor = require("./Actor");
 var _lodash = require("lodash");
 var _lodashDefault = parcelHelpers.interopDefault(_lodash);
 class Crown extends _actor.Actor {
-    //origin: Point;
-    // maxSpeed: number;
-    // speed: Point;
     constructor(initialPos = {
         x: _lodashDefault.default.random(0, 1024),
         y: _lodashDefault.default.random(0, 1024)
@@ -715,41 +656,31 @@ class Crown extends _actor.Actor {
         super(initialPos);
         this.crownSize = size;
         this.crownColor = "pink";
+        // this.snake = snake;
         this.status = true;
-    // this.origin = { x:initialPos.x, y: initialPos.y };
-    // this.maxSpeed = initialMaxSpeed * 10;
-    // this.speed = { x: this.maxSpeed, y: 0};
     }
     update(delta) {
-    //x position
-    // let newPosx = this.origin.x + this.speed.x * delta;
-    // if (newPosx < 1024 && newPosx >= 0){
-    //     this.origin.x = newPosx
-    // }
-    // //y position
-    // let newposy = this.origin.y + this.speed.y * delta;
-    // this.origin.y = newposy;
+    // let snakePos = this.snake.position;
+    // let crownPos = this.position;
+    // let distance = Math.sqrt(
+    //        Math.pow(crownPos.x - snakePos.x, 2) + Math.pow(crownPos.y - snakePos.y, 2),
+    //   );
+    //      if (distance < 30) {
+    //          this.status = false;
+    // //       //ver video esta parte no entiendo bien de donde sale barrierindex
+    //     }
     }
     keyboard_event_down(key) {
-    //hay que indicar == para que no lo iguale
-    // if(key == "ArrowLeft"){
-    //     this.position.x -= 30
-    // }else if ((key == "ArrowRight")) {
-    //     this.position.x += 30
-    // } else if ((key == "ArrowUp")) {
-    //     this.position.y -=30
-    // }else if ((key == "ArrowDown")){
-    //     this.position.y += 30;
-    // }
     }
     draw(delta1, ctx) {
         if (this.status) {
-            ctx.fillStyle = this.crownColor;
+            //ctx.fillStyle = this.crownColor;
             //rotar cuadrado. translate tiene que estar por encima de rotate
             ctx.translate(this.position.x, this.position.y);
+            this.status ? ctx.fillStyle = this.crownColor : ctx.fillStyle = "red";
             //rotar canvas
             // ctx.rotate(angleToRad(this.angle));
-            ctx.fillRect(//es negativo para desplazarme entre x e y 
+            ctx.fillRect(//es negativo para desplazarme entre x e y
             -this.crownSize.h / 2, -this.crownSize.w / 2, this.crownSize.h, this.crownSize.w);
         }
     }
@@ -15020,102 +14951,16 @@ var global = arguments[3];
     root._ = _;
 }).call(this);
 
-},{}],"hnMNm":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "Pacman", ()=>Pacman
-);
-var _actor = require("./Actor");
-class Pacman extends _actor.Actor {
-    constructor(initialPos, color = "yellow", initialMaxSpeed = 10){
-        super(initialPos);
-        this.pacmanSize = 30;
-        //this.mouthOpen = 20;
-        this.origin = {
-            x: initialPos.x,
-            y: initialPos.y
-        };
-        this.color = color;
-        this.maxSpeed = initialMaxSpeed * 10;
-        this.speed = {
-            x: this.maxSpeed,
-            y: 0
-        };
-    }
-    update(delta) {
-        //this.mouthOpen += 0.8;
-        // Set X position
-        let newPosX = this.origin.x + this.speed.x * delta;
-        if (newPosX < 1024 && newPosX >= 0) this.origin.x = newPosX;
-        // Set Y position
-        let newPosY = this.origin.y + this.speed.y * delta;
-        this.origin.y = newPosY;
-    }
-    keyboard_event_down(key) {
-        switch(key){
-            case `ArrowRight`:
-                console.log("right");
-                this.speed.x = this.maxSpeed;
-                this.speed.y = 0;
-                break;
-            case `ArrowLeft`:
-                console.log("left");
-                this.speed.x = -this.maxSpeed;
-                this.speed.y = 0;
-                break;
-            case `ArrowUp`:
-                console.log("up");
-                this.speed.y = -this.maxSpeed;
-                this.speed.x = 0;
-                break;
-            case `ArrowDown`:
-                console.log("down");
-                this.speed.y = this.maxSpeed;
-                this.speed.x = 0;
-                break;
-        }
-    }
-    draw(delta1, ctx) {
-        let origin = this.origin;
-        let pacmanSize = this.pacmanSize;
-        //let mouthOpen = this.mouthOpen;
-        //let open = 20 * Math.sin(10 * this.mouthOpen * delta) + 40;
-        // Controlamos la dirección del PACMAN
-        let direction = 0;
-        if (this.speed.x != 0 && this.speed.x < 0) direction = 180;
-        if (this.speed.y != 0 && this.speed.y < 0) direction = -90;
-        if (this.speed.y != 0 && this.speed.y > 0) direction = 90;
-        ctx.fillStyle = "yello";
-        ctx.translate(this.position.x, this.position.y);
-        ctx.fillRect(this.origin.x, this.origin.y, 100, 300);
-    // ctx.strokeStyle = "black";
-    // ctx.lineWidth = 4;
-    // ctx.save();
-    // ctx.translate(origin.x, origin.y);
-    // ctx.beginPath();
-    // ctx.font = "18px Arial";
-    // ctx.fillText(`SX:${this.speed.x} SY:${this.speed.y}`, 40, 0);
-    // ctx.rotate(angleToRad(direction));
-    // ctx.fillStyle = this.color;
-    // ctx.arc(0, 0, pacmanSize, angleToRad(-open), angleToRad(open), true);
-    // ctx.lineTo(0, 0);
-    // // ctx.lineTo(origin.x + pacmanSize, origin.y + mouthOpen);
-    // // ctx.moveTo(origin.x, origin.y);
-    // // ctx.lineTo(origin.x + pacmanSize, origin.y - mouthOpen);
-    // ctx.closePath();
-    // ctx.stroke();
-    // ctx.fill();
-    // ctx.restore();
-    }
-}
-
-},{"./Actor":"7cXFN","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"dh63G":[function(require,module,exports) {
+},{}],"6Z73H":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Manager", ()=>Manager
 );
 parcelHelpers.export(exports, "createGameManager", ()=>createGameManager
 );
+//singletone para isntancia runa clase. el resto de actores podran acceder a ello. 
+//clase general donde hay información compartida
+//cosas que pertenencen al ambito general del juego
 class GameManager {
     constructor(actor1){
         this.numCrowns = 4;

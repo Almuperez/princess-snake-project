@@ -11,21 +11,14 @@ window.onload = () => {
 
   let fps = new FPSViewer({ x: 5, y: 15 });
   let snake = new Snake({ x: 0, y: 0 });
-  //let crownArray = [new Crown(snake), new Crown(), new Crown(), new Crown()];
   createGameManager(snake)
-
-  //creame gameManager para snake
-  //createGameManager(snake);
-
   let actors: Array<IActor> = [fps, snake, ...Manager.crowns];
-
   let lastFrame = 0;
   const render = (time: number) => {
     let delta = (time - lastFrame) / 1000;
     lastFrame = time;
     actors.forEach((e) => e.update(delta));
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-
     actors.forEach((e) => {
       ctx.save();
       e.draw(delta, ctx);

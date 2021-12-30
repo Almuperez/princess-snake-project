@@ -460,7 +460,6 @@ function hmrAcceptRun(bundle, id) {
 
 },{}],"Yx9M4":[function(require,module,exports) {
 var _snake = require("./actors/Snake");
-var _crown = require("./actors/Crown");
 var _fpsviewer = require("./actors/FPSViewer");
 var _gameManager = require("./state/GameManager");
 window.onload = ()=>{
@@ -474,18 +473,11 @@ window.onload = ()=>{
         x: 0,
         y: 0
     });
-    let crownArray = [
-        new _crown.Crown(),
-        new _crown.Crown(),
-        new _crown.Crown(),
-        new _crown.Crown()
-    ];
-    //creame gameManager para snake
     _gameManager.createGameManager(snake);
     let actors = [
         fps,
-        ...crownArray,
-        snake
+        snake,
+        ..._gameManager.Manager.crowns
     ];
     let lastFrame = 0;
     const render = (time)=>{
@@ -509,7 +501,7 @@ window.onload = ()=>{
     });
 };
 
-},{"./actors/Snake":"1HxGR","./actors/FPSViewer":"jhSnX","./actors/Crown":"8xuAo","./state/GameManager":"6Z73H"}],"1HxGR":[function(require,module,exports) {
+},{"./actors/Snake":"1HxGR","./actors/FPSViewer":"jhSnX","./state/GameManager":"6Z73H"}],"1HxGR":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Snake", ()=>Snake
@@ -638,7 +630,39 @@ class FPSViewer extends _actor.Actor {
     }
 }
 
-},{"./Actor":"7cXFN","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"8xuAo":[function(require,module,exports) {
+},{"./Actor":"7cXFN","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"6Z73H":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Manager", ()=>Manager
+);
+parcelHelpers.export(exports, "createGameManager", ()=>createGameManager
+);
+var _crown = require("../actors/Crown");
+class GameManager {
+    constructor(actor1){
+        this.crowns = [];
+        this.points = 0;
+        this.numCrowns = 4;
+        this.snake = actor1;
+        for(let i = 0; i <= this.numCrowns; i++)this.crowns.push(new _crown.Crown(actor1));
+        console.log("ready!");
+    }
+    addPoint() {
+        console.log("addPoint");
+        this.points++;
+        this.crowns.forEach((b)=>b.status = false
+        );
+        if (this.points > 1) alert("YOU WON");
+    }
+    touchingCrown(idx) {
+    }
+}
+let Manager;
+const createGameManager = (actor)=>{
+    Manager = new GameManager(actor);
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV","../actors/Crown":"8xuAo"}],"8xuAo":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Crown", ()=>Crown
@@ -647,7 +671,7 @@ var _actor = require("./Actor");
 var _lodash = require("lodash");
 var _lodashDefault = parcelHelpers.interopDefault(_lodash);
 class Crown extends _actor.Actor {
-    constructor(initialPos = {
+    constructor(snake, initialPos = {
         x: _lodashDefault.default.random(0, 1024),
         y: _lodashDefault.default.random(0, 1024)
     }, size = {
@@ -657,37 +681,29 @@ class Crown extends _actor.Actor {
         super(initialPos);
         this.crownSize = size;
         this.crownColor = "pink";
-        //this.snake = snake;
+        this.snake = snake;
         this.status = true;
     }
     update(delta) {
-    // let snakePos = this.snake.position;
-    // let crownPos = this.position;
-    // let distance = Math.sqrt(
-    //        Math.pow(crownPos.x - snakePos.x, 2) + Math.pow(crownPos.y - snakePos.y, 2),
-    //   );
-    //      if (distance < 30) {
-    //          this.status = false;
-    // //       //ver video esta parte no entiendo bien de donde sale barrierindex
-    //     }
+        let snakePos = this.snake.position;
+        let crownPos = this.position;
+        let distance = 0;
+        if (snakePos) distance = Math.sqrt(Math.pow(crownPos.x - snakePos.x, 2) + Math.pow(crownPos.y - snakePos.y, 2));
+        if (distance < 30) //Manager.addPoint() && new crownPos;
+        this.status = false;
     }
     keyboard_event_down(key) {
     }
     draw(delta1, ctx) {
         if (this.status) {
             ctx.fillStyle = this.crownColor;
-            //rotar cuadrado. translate tiene que estar por encima de rotate
             ctx.translate(this.position.x, this.position.y);
-            //this.status? (ctx.fillStyle = this.crownColor) : (ctx.fillStyle = "red")
-            //rotar canvas
-            // ctx.rotate(angleToRad(this.angle));
-            ctx.fillRect(//es negativo para desplazarme entre x e y
-            -this.crownSize.h / 2, -this.crownSize.w / 2, this.crownSize.h, this.crownSize.w);
+            ctx.fillRect(-this.crownSize.h / 2, -this.crownSize.w / 2, this.crownSize.h, this.crownSize.w);
         }
     }
 }
 
-},{"./Actor":"7cXFN","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV","lodash":"1vR8I"}],"1vR8I":[function(require,module,exports) {
+},{"./Actor":"7cXFN","lodash":"1vR8I","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"1vR8I":[function(require,module,exports) {
 var global = arguments[3];
 (function() {
     /** Used as a safe reference for `undefined` in pre-ES5 environments. */ var undefined;
@@ -14952,45 +14968,6 @@ var global = arguments[3];
     root._ = _;
 }).call(this);
 
-},{}],"6Z73H":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "Manager", ()=>Manager
-);
-parcelHelpers.export(exports, "createGameManager", ()=>createGameManager
-);
-//singletone para isntancia runa clase. el resto de actores podran acceder a ello. 
-//clase general donde hay información compartida
-//cosas que pertenencen al ambito general del juego
-class GameManager {
-    constructor(actor1){
-        this.numCrowns = 4;
-        console.log("ready!");
-    }
-    addPoint() {
-        console.log("addPoint");
-    // this.currentLap++;
-    // this.currentBarrier = 0;
-    // this.barriers.forEach((b) => (b.touched = false));
-    // if (this.currentLap > 1) {
-    // 	alert("YOU WON");
-    }
-    touchingCrown(idx) {
-    // if (this.currentBarrier == idx) {
-    // 	this.currentBarrier++;
-    // 	if (this.currentBarrier == this.barriers.length) {
-    // 		this.addLap();
-    // 	}
-    // 	return true;
-    // }
-    // return false;
-    }
-}
-let Manager;
-const createGameManager = (actor)=>{
-    Manager = new GameManager(actor);
-};
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}]},["iRSrf","Yx9M4"], "Yx9M4", "parcelRequiree018")
+},{}]},["iRSrf","Yx9M4"], "Yx9M4", "parcelRequiree018")
 
 //# sourceMappingURL=index.abe0c6a4.js.map

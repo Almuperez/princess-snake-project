@@ -12,6 +12,7 @@ window.onload = () => {
   let snake = new Snake({ x: 0, y: 0 });
   let crownArray = [new Crown(), new Crown(), new Crown(), new Crown()];
 
+  //creame gameManager para snake
   createGameManager(snake);
 
   let actors: Array<IActor> = [fps, ...crownArray, snake];

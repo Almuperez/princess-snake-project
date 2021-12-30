@@ -5,10 +5,44 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: lavender;
+    background-image: image();
+    
 }
 
 canvas{
     border: 5px solid rgb(241, 239, 93);
     background: rgb(243, 250, 184);
+    margin-right: 200px;
+    
+   
+    
 }
+
+img{
+    position: relative;
+}
+
+h1 {
+    margin-left: 30px;
+    display: flex;
+    text-align: left;
+    color:rgb(5, 4, 4);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+   
+
+}
+
+p{
+    display: flex;
+    text-align: left;
+    color: rgb(20, 17, 17);
+    margin-left: 40px;
+    margin-right: 200px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+   
+}
+    
+
 /*# sourceMappingURL=index.05abb049.css.map */

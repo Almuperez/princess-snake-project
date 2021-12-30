@@ -21,7 +21,7 @@ export class Crown extends Actor {
     super(initialPos);
     this.crownSize = size;
     this.crownColor = "pink";
-    // this.snake = snake;
+    //this.snake = snake;
     this.status = true;
 
   }
@@ -44,10 +44,10 @@ export class Crown extends Actor {
 
   draw(delta: number, ctx: CanvasRenderingContext2D) {
     if (this.status) {
-      //ctx.fillStyle = this.crownColor;
+      ctx.fillStyle = this.crownColor;
       //rotar cuadrado. translate tiene que estar por encima de rotate
       ctx.translate(this.position.x, this.position.y);
-      this.status? (ctx.fillStyle = this.crownColor) : (ctx.fillStyle = "red")
+      //this.status? (ctx.fillStyle = this.crownColor) : (ctx.fillStyle = "red")
       //rotar canvas
       // ctx.rotate(angleToRad(this.angle));
       ctx.fillRect(

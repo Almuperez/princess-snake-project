@@ -480,6 +480,7 @@ window.onload = ()=>{
         new _crown.Crown(),
         new _crown.Crown()
     ];
+    //creame gameManager para snake
     _gameManager.createGameManager(snake);
     let actors = [
         fps,
@@ -656,7 +657,7 @@ class Crown extends _actor.Actor {
         super(initialPos);
         this.crownSize = size;
         this.crownColor = "pink";
-        // this.snake = snake;
+        //this.snake = snake;
         this.status = true;
     }
     update(delta) {
@@ -674,10 +675,10 @@ class Crown extends _actor.Actor {
     }
     draw(delta1, ctx) {
         if (this.status) {
-            //ctx.fillStyle = this.crownColor;
+            ctx.fillStyle = this.crownColor;
             //rotar cuadrado. translate tiene que estar por encima de rotate
             ctx.translate(this.position.x, this.position.y);
-            this.status ? ctx.fillStyle = this.crownColor : ctx.fillStyle = "red";
+            //this.status? (ctx.fillStyle = this.crownColor) : (ctx.fillStyle = "red")
             //rotar canvas
             // ctx.rotate(angleToRad(this.angle));
             ctx.fillRect(//es negativo para desplazarme entre x e y
@@ -14967,8 +14968,22 @@ class GameManager {
         console.log("ready!");
     }
     addPoint() {
+        console.log("addPoint");
+    // this.currentLap++;
+    // this.currentBarrier = 0;
+    // this.barriers.forEach((b) => (b.touched = false));
+    // if (this.currentLap > 1) {
+    // 	alert("YOU WON");
     }
     touchingCrown(idx) {
+    // if (this.currentBarrier == idx) {
+    // 	this.currentBarrier++;
+    // 	if (this.currentBarrier == this.barriers.length) {
+    // 		this.addLap();
+    // 	}
+    // 	return true;
+    // }
+    // return false;
     }
 }
 let Manager;

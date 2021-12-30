@@ -13,12 +13,33 @@ class GameManager {
     this.numCrowns = 4;
     console.log("ready!");
   }
-  addPoint() {}
-  touchingCrown(idx: number) {}
+  addPoint() {
+    console.log("addPoint")
+
+    // this.currentLap++;
+		// this.currentBarrier = 0;
+		// this.barriers.forEach((b) => (b.touched = false));
+
+		// if (this.currentLap > 1) {
+		// 	alert("YOU WON");
+  }
+  touchingCrown(idx: number) {
+    // if (this.currentBarrier == idx) {
+		// 	this.currentBarrier++;
+		// 	if (this.currentBarrier == this.barriers.length) {
+		// 		this.addLap();
+		// 	}
+		// 	return true;
+		// }
+		// return false;
 }
 
+}
+//exportar manager y creatmanager en script
+//cuando alguien invoque gamemanager voy a devolver un undefine
 export let Manager: GameManager;
 
+//si no quiero un undefine hay que llamar a creategamamnager
 export const createGameManager = (actor: IActor) => {
   Manager = new GameManager(actor);
 };

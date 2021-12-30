@@ -8,14 +8,16 @@ window.onload = () => {
   var canvas = document.getElementById("canvas") as HTMLCanvasElement;
   var ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
 
+
   let fps = new FPSViewer({ x: 5, y: 15 });
   let snake = new Snake({ x: 0, y: 0 });
-  let crownArray = [new Crown(), new Crown(), new Crown(), new Crown()];
+  //let crownArray = [new Crown(snake), new Crown(), new Crown(), new Crown()];
+  createGameManager(snake)
 
   //creame gameManager para snake
-  createGameManager(snake);
+  //createGameManager(snake);
 
-  let actors: Array<IActor> = [fps, ...crownArray, snake];
+  let actors: Array<IActor> = [fps, snake, ...Manager.crowns];
 
   let lastFrame = 0;
   const render = (time: number) => {

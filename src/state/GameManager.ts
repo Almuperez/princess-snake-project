@@ -9,30 +9,40 @@ class GameManager {
   //almacenar vidas que tienes, posciones...
   //¿¿¿Me tendría que traer la parte de lodash que hace que las coronas aparezcan aleatorias aqui?
   numCrowns: number;
+  snake: IActor;
+  crowns: Crown[] = [];
+  points: number;
   constructor(actor: IActor) {
+    this.points = 0;
     this.numCrowns = 4;
+    this.snake = actor;
+    for (let i = 0; i <= this.numCrowns; i++) {
+      this.crowns.push(
+        new Crown(actor)
+      )
+    }
     console.log("ready!");
   }
   addPoint() {
     console.log("addPoint")
 
     // this.currentLap++;
-		// this.currentBarrier = 0;
-		// this.barriers.forEach((b) => (b.touched = false));
+    // this.currentBarrier = 0;
+    // this.barriers.forEach((b) => (b.touched = false));
 
-		// if (this.currentLap > 1) {
-		// 	alert("YOU WON");
+    // if (this.currentLap > 1) {
+    // 	alert("YOU WON");
   }
   touchingCrown(idx: number) {
     // if (this.currentBarrier == idx) {
-		// 	this.currentBarrier++;
-		// 	if (this.currentBarrier == this.barriers.length) {
-		// 		this.addLap();
-		// 	}
-		// 	return true;
-		// }
-		// return false;
-}
+    // 	this.currentBarrier++;
+    // 	if (this.currentBarrier == this.barriers.length) {
+    // 		this.addLap();
+    // 	}
+    // 	return true;
+    // }
+    // return false;
+  }
 
 }
 //exportar manager y creatmanager en script

@@ -6,6 +6,7 @@ export interface IActor {
   keyboard_event_down?: (key: string) => void;
   keyboard_event_up?: (key: string) => void;
   draw: (delta: number, ctx: CanvasRenderingContext2D) => void;
+  growSnake?:() => void;
 }
 
 export class Actor implements IActor {

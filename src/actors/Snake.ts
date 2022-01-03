@@ -14,7 +14,7 @@ export class Snake extends Actor implements IActor {
   constructor(
     initialPos: Point,
     color = "green",
-    size: Size = { w: 50, h: 50 },
+    size: Size = { w: 20, h: 20 },
     initalMaxSpeed = 10
   ) {
     super(initialPos);
@@ -27,13 +27,21 @@ export class Snake extends Actor implements IActor {
 
   update(delta: number) {
     let newPosX = this.position.x + this.speed.x * delta;
-    if (newPosX < 1024 && newPosX >= 0) {
+    if (newPosX < 500 && newPosX >= 0) {
       this.position.x = newPosX;
     }
 
     let newPosY = this.position.y + this.speed.y * delta;
     this.position.y = newPosY;
   }
+
+  growSnake(){
+    const sizesnake = this.snakeSize
+    this.snakeSize = {w: sizesnake.w + 10, h: sizesnake.h}
+    this.maxSpeed = this.maxSpeed * 1.05;
+  }
+
+
   keyboard_event_down(key: string) {
     switch (key) {
       case `ArrowRight`:

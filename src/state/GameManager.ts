@@ -19,13 +19,12 @@ class GameManager {
   addPoint() {
     console.log("addPoint");
     this.points++;
-    this.crowns.forEach((b) => (b.status = false));
-    if (this.points > 1) {
+    console.log("adpoint", this.points)
+    if (this.points > 10) {
+      this.crowns.forEach((b) => (b.status = false));
       alert("YOU WON");
     }
   }
-
-  touchingCrown(idx: number) {}
 }
 
 export let Manager: GameManager;

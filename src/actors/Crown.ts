@@ -17,15 +17,15 @@ export class Crown extends Actor {
   status: boolean;
   constructor(
     snake: IActor,
-    initialPos: Point = { x: _.random(0, 1024), y: _.random(0, 1024) },
-    size: Size = { w: 50, h: 50 },
+    initialPos: Point = { x: _.random(0, 500), y: _.random(0, 500) },
+    size: Size = { w: 20, h: 20 },
   ) {
     super(initialPos);
     this.crownSize = size;
     this.crownColor = "pink";
     this.snake = snake;
     this.status = true;
-
+  
   }
 
   update(delta: number) {
@@ -38,11 +38,18 @@ export class Crown extends Actor {
 
       );
     }
-    if (distance < 30) {
-      //Manager.addPoint() && new crownPos;
-      this.status = false;
-    }
-      } 
+    //math.floor es un metodo que si es 30.9 lo redondea a 30. metodo que redondea hacia abajo
+    if (Math.floor(distance) == 30) {
+      this.position = { x: _.random(0, 500), y: _.random(0, 500)};
+      Manager.addPoint()
+      if(this.snake.growSnake){
+        this.snake.growSnake()
+      }
+      // this.snake.grownSnake();
+      
+    } 
+      
+  }  
     
 
   keyboard_event_down(key: string) { }

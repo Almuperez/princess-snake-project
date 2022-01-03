@@ -509,8 +509,8 @@ parcelHelpers.export(exports, "Snake", ()=>Snake
 var _actor = require("./Actor");
 class Snake extends _actor.Actor {
     constructor(initialPos, color = "green", size = {
-        w: 50,
-        h: 50
+        w: 20,
+        h: 20
     }, initalMaxSpeed = 10){
         super(initialPos);
         this.snakeSize = size;
@@ -527,9 +527,17 @@ class Snake extends _actor.Actor {
     }
     update(delta) {
         let newPosX = this.position.x + this.speed.x * delta;
-        if (newPosX < 1024 && newPosX >= 0) this.position.x = newPosX;
+        if (newPosX < 500 && newPosX >= 0) this.position.x = newPosX;
         let newPosY = this.position.y + this.speed.y * delta;
         this.position.y = newPosY;
+    }
+    growSnake() {
+        const sizesnake = this.snakeSize;
+        this.snakeSize = {
+            w: sizesnake.w + 10,
+            h: sizesnake.h
+        };
+        this.maxSpeed = this.maxSpeed * 1.05;
     }
     keyboard_event_down(key) {
         switch(key){
@@ -650,11 +658,12 @@ class GameManager {
     addPoint() {
         console.log("addPoint");
         this.points++;
-        this.crowns.forEach((b)=>b.status = false
-        );
-        if (this.points > 1) alert("YOU WON");
-    }
-    touchingCrown(idx) {
+        console.log("adpoint", this.points);
+        if (this.points > 10) {
+            this.crowns.forEach((b)=>b.status = false
+            );
+            alert("YOU WON");
+        }
     }
 }
 let Manager;
@@ -662,7 +671,7 @@ const createGameManager = (actor)=>{
     Manager = new GameManager(actor);
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV","../actors/Crown":"8xuAo"}],"8xuAo":[function(require,module,exports) {
+},{"../actors/Crown":"8xuAo","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"8xuAo":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Crown", ()=>Crown
@@ -670,13 +679,14 @@ parcelHelpers.export(exports, "Crown", ()=>Crown
 var _actor = require("./Actor");
 var _lodash = require("lodash");
 var _lodashDefault = parcelHelpers.interopDefault(_lodash);
+var _gameManager = require("../state/GameManager");
 class Crown extends _actor.Actor {
     constructor(snake, initialPos = {
-        x: _lodashDefault.default.random(0, 1024),
-        y: _lodashDefault.default.random(0, 1024)
+        x: _lodashDefault.default.random(0, 500),
+        y: _lodashDefault.default.random(0, 500)
     }, size = {
-        w: 50,
-        h: 50
+        w: 20,
+        h: 20
     }){
         super(initialPos);
         this.crownSize = size;
@@ -689,8 +699,16 @@ class Crown extends _actor.Actor {
         let crownPos = this.position;
         let distance = 0;
         if (snakePos) distance = Math.sqrt(Math.pow(crownPos.x - snakePos.x, 2) + Math.pow(crownPos.y - snakePos.y, 2));
-        if (distance < 30) //Manager.addPoint() && new crownPos;
-        this.status = false;
+        //math.floor es un metodo que si es 30.9 lo redondea a 30. metodo que redondea hacia abajo
+        if (Math.floor(distance) == 30) {
+            this.position = {
+                x: _lodashDefault.default.random(0, 500),
+                y: _lodashDefault.default.random(0, 500)
+            };
+            _gameManager.Manager.addPoint();
+            if (this.snake.growSnake) this.snake.growSnake();
+        // this.snake.grownSnake();
+        }
     }
     keyboard_event_down(key) {
     }
@@ -703,7 +721,7 @@ class Crown extends _actor.Actor {
     }
 }
 
-},{"./Actor":"7cXFN","lodash":"1vR8I","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"1vR8I":[function(require,module,exports) {
+},{"./Actor":"7cXFN","lodash":"1vR8I","../state/GameManager":"6Z73H","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"1vR8I":[function(require,module,exports) {
 var global = arguments[3];
 (function() {
     /** Used as a safe reference for `undefined` in pre-ES5 environments. */ var undefined;

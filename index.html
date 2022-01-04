@@ -1,25 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./public/style.css" />
+    <script type="module" src="/src/script.ts"></script>
+    <title>PrincessSnake</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="./public/style.css" />
-  <script type="module" src="/src/script.ts"></script>
-  <title>PrincessSnake</title>
-</head>
-
-<body>
-  <div id="main">
-    <div>
-      <h1>Instrucciones</h1>
-      <p> Bienvenido al famoso juego de la serpiente versionado en PrincessSnake. Cada corona hará a PrincessSnake crecer más y más. Si te comes todas las corona ¡Has ganado! Mueve con las felchas Up, dowm, right, left ... y a jugar</p>
+  <body>
+    <div id="main">
+      <div>
+        <h1>Instrucciones</h1>
+        <p>
+          ¡Bienvenido al famoso juego de la serpiente versionado en PrincessSnake!
+        </p>
+        <p>
+          ¿Cómo mueves a la serpiente? Con las felchas del teclado desplázate hacia arriba, abajo, izquierda o derecha.
+        </p>
+        <p>
+          Cada vez que PrincessSnake se coma una corona, crecerá más y tú recibirás puntos.
+        </p>
+        <p>
+          Si consigues tantos puntos como se necesitán para pasar de nivel ¡Has ganado! 
+        </p>
+      </div>
+      <div>
+      <img height="500" src="./img/pricnesssnake.png" alt="" />
     </div>
-      <img height="500" src="./img/pricnesssnake.png" alt="">
-    <div>
-    <canvas id="canvas" width="500" height="500" ></canvas> 
-  </div>
-  </div>
-</body>
+      <div>
+        <canvas id="canvas" width="500" height="500"></canvas>
+      </div>
+    </div>
+  </body>
 </html>

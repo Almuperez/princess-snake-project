@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "parcel index.html",
-    "build": "tsc"
+    "build": "yarn run clean && yarn run ghbuild",
+    "ghbuild": "parcel build --dist-dir docs --public-url /princess-snake-project index.html",
+    "clean": "rimraf docs list"
   },
   "repository": "git@github.com:Almuperez/princess-snake-project.git",
   "author": "Almudena",
@@ -15,6 +16,7 @@
     "eslint": "^8.5.0",
     "lodash": "^4.17.21",
     "parcel": "^2.0.1",
+    "rimraf": "^3.0.2",
     "typescript": "^4.5.4"
   }
 }

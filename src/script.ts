@@ -3,6 +3,8 @@ import { Snake } from "./actors/Snake";
 import { Crown } from "./actors/Crown";
 import { FPSViewer } from "./actors/FPSViewer";
 import { createGameManager, Manager } from "./state/GameManager";
+import { Chrono } from "./actors/Chrono";
+//import { AddPoint } from "./actors/Addpoint";
 
 window.onload = () => {
   var canvas = document.getElementById("canvas") as HTMLCanvasElement;
@@ -11,8 +13,14 @@ window.onload = () => {
 
   let fps = new FPSViewer({ x: 5, y: 15 });
   let snake = new Snake({ x: 0, y: 0 });
+  let chrono = new Chrono({ x: 200, y:15});
+
   createGameManager(snake)
-  let actors: Array<IActor> = [fps, snake, ...Manager.crowns];
+  let actors: Array<IActor> = [
+    fps, 
+    snake, 
+    chrono,
+    ...Manager.crowns];
   let lastFrame = 0;
   const render = (time: number) => {
     let delta = (time - lastFrame) / 1000;

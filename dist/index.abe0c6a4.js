@@ -462,6 +462,8 @@ function hmrAcceptRun(bundle, id) {
 var _snake = require("./actors/Snake");
 var _fpsviewer = require("./actors/FPSViewer");
 var _gameManager = require("./state/GameManager");
+var _chrono = require("./actors/Chrono");
+//import { AddPoint } from "./actors/Addpoint";
 window.onload = ()=>{
     var canvas = document.getElementById("canvas");
     var ctx = canvas.getContext("2d");
@@ -473,10 +475,15 @@ window.onload = ()=>{
         x: 0,
         y: 0
     });
+    let chrono = new _chrono.Chrono({
+        x: 200,
+        y: 15
+    });
     _gameManager.createGameManager(snake);
     let actors = [
         fps,
         snake,
+        chrono,
         ..._gameManager.Manager.crowns
     ];
     let lastFrame = 0;
@@ -501,7 +508,7 @@ window.onload = ()=>{
     });
 };
 
-},{"./actors/Snake":"1HxGR","./actors/FPSViewer":"jhSnX","./state/GameManager":"6Z73H"}],"1HxGR":[function(require,module,exports) {
+},{"./actors/Snake":"1HxGR","./actors/FPSViewer":"jhSnX","./state/GameManager":"6Z73H","./actors/Chrono":"kY5N1"}],"1HxGR":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Snake", ()=>Snake
@@ -537,7 +544,7 @@ class Snake extends _actor.Actor {
             w: sizesnake.w + 10,
             h: sizesnake.h
         };
-        this.maxSpeed = this.maxSpeed * 1.05;
+        this.maxSpeed = this.maxSpeed * 1.005;
     }
     keyboard_event_down(key) {
         switch(key){
@@ -632,7 +639,7 @@ class FPSViewer extends _actor.Actor {
     }
     draw(delta, ctx) {
         const fps = (1 / delta).toFixed(2);
-        ctx.font = "15px Arial";
+        ctx.font = "10px vedrana";
         ctx.fillStyle = "black";
         ctx.fillText(`FPS:${fps}`, this.position.x, this.position.y);
     }
@@ -652,18 +659,26 @@ class GameManager {
         this.points = 0;
         this.numCrowns = 4;
         this.snake = actor1;
+        this.chrono = 0;
+        this.addpoints = 0;
         for(let i = 0; i <= this.numCrowns; i++)this.crowns.push(new _crown.Crown(actor1));
-        console.log("ready!");
+    //console.log("ready!");
+    }
+    update(delta) {
+        this.chrono += delta;
     }
     addPoint() {
-        console.log("addPoint");
+        //console.log("addPoint");
         this.points++;
-        console.log("adpoint", this.points);
+        //console.log("adpoint", this.points)
         if (this.points > 10) {
             this.crowns.forEach((b)=>b.status = false
             );
-            alert("YOU WON");
+            alert(`YOU WON Your score ${this.getChrono()}`);
         }
+    }
+    getChrono() {
+        return `${this.chrono.toFixed(1)} segundos`;
     }
 }
 let Manager;
@@ -680,6 +695,7 @@ var _actor = require("./Actor");
 var _lodash = require("lodash");
 var _lodashDefault = parcelHelpers.interopDefault(_lodash);
 var _gameManager = require("../state/GameManager");
+const crownimg = require("../assets/Crown.png");
 class Crown extends _actor.Actor {
     constructor(snake, initialPos = {
         x: _lodashDefault.default.random(0, 500),
@@ -693,6 +709,9 @@ class Crown extends _actor.Actor {
         this.crownColor = "pink";
         this.snake = snake;
         this.status = true;
+        //crown image
+        this.image = new Image();
+        this.image.src = crownimg;
     }
     update(delta) {
         let snakePos = this.snake.position;
@@ -715,13 +734,19 @@ class Crown extends _actor.Actor {
     draw(delta1, ctx) {
         if (this.status) {
             ctx.fillStyle = this.crownColor;
+            ctx.drawImage(this.image, this.position.x, this.position.y, 40, 20);
             ctx.translate(this.position.x, this.position.y);
-            ctx.fillRect(-this.crownSize.h / 2, -this.crownSize.w / 2, this.crownSize.h, this.crownSize.w);
+        // ctx.fillRect(
+        //   -this.crownSize.h / 2,
+        //   -this.crownSize.w / 2,
+        //   this.crownSize.h,
+        //   this.crownSize.w
+        // );
         }
     }
 }
 
-},{"./Actor":"7cXFN","lodash":"1vR8I","../state/GameManager":"6Z73H","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"1vR8I":[function(require,module,exports) {
+},{"./Actor":"7cXFN","lodash":"1vR8I","../state/GameManager":"6Z73H","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV","../assets/Crown.png":"7EVJa"}],"1vR8I":[function(require,module,exports) {
 var global = arguments[3];
 (function() {
     /** Used as a safe reference for `undefined` in pre-ES5 environments. */ var undefined;
@@ -14986,6 +15011,64 @@ var global = arguments[3];
     root._ = _;
 }).call(this);
 
-},{}]},["iRSrf","Yx9M4"], "Yx9M4", "parcelRequiree018")
+},{}],"7EVJa":[function(require,module,exports) {
+module.exports = require('./helpers/bundle-url').getBundleURL('lcwS3') + "Crown.4793ab5c.png" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"chiK4"}],"chiK4":[function(require,module,exports) {
+"use strict";
+var bundleURL = {
+};
+function getBundleURLCached(id) {
+    var value = bundleURL[id];
+    if (!value) {
+        value = getBundleURL();
+        bundleURL[id] = value;
+    }
+    return value;
+}
+function getBundleURL() {
+    try {
+        throw new Error();
+    } catch (err) {
+        var matches = ('' + err.stack).match(/(https?|file|ftp):\/\/[^)\n]+/g);
+        if (matches) // The first two stack frames will be this function and getBundleURLCached.
+        // Use the 3rd one, which will be a runtime in the original bundle.
+        return getBaseURL(matches[2]);
+    }
+    return '/';
+}
+function getBaseURL(url) {
+    return ('' + url).replace(/^((?:https?|file|ftp):\/\/.+)\/[^/]+$/, '$1') + '/';
+} // TODO: Replace uses with `new URL(url).origin` when ie11 is no longer supported.
+function getOrigin(url) {
+    var matches = ('' + url).match(/(https?|file|ftp):\/\/[^/]+/);
+    if (!matches) throw new Error('Origin not found');
+    return matches[0];
+}
+exports.getBundleURL = getBundleURLCached;
+exports.getBaseURL = getBaseURL;
+exports.getOrigin = getOrigin;
+
+},{}],"kY5N1":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Chrono", ()=>Chrono
+);
+var _actor = require("./Actor");
+var _gameManager = require("../state/GameManager");
+class Chrono extends _actor.Actor {
+    update() {
+    }
+    heyboard_event_down() {
+    }
+    draw(delta, ctx) {
+        const chrono = _gameManager.Manager.chrono.toFixed(1);
+        ctx.font = "10px vedrana";
+        ctx.fillStyle = "black";
+        ctx.fillText(`CRONO:${chrono} segundos`, this.position.x, this.position.y);
+    }
+}
+
+},{"./Actor":"7cXFN","../state/GameManager":"6Z73H","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}]},["iRSrf","Yx9M4"], "Yx9M4", "parcelRequiree018")
 
 //# sourceMappingURL=index.abe0c6a4.js.map

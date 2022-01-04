@@ -38,7 +38,7 @@ export class Snake extends Actor implements IActor {
   growSnake(){
     const sizesnake = this.snakeSize
     this.snakeSize = {w: sizesnake.w + 10, h: sizesnake.h}
-    this.maxSpeed = this.maxSpeed * 1.05;
+    this.maxSpeed = this.maxSpeed * 1.005;
   }
 
 

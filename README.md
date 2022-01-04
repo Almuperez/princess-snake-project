@@ -1,5 +1,5 @@
 
-## PrincessSnake
+# PrincessSnake
 
 
 <img src="./img/PrincessSnakeBadFace.png" alt="" width="300"/>
@@ -20,43 +20,53 @@
 - [Agradecimientos](#agradecimientos)
 - [Otras consideraciones](#otras-consideraciones)
 
+# Imagenes y vídeos
 
+<img src="./img/princesnake_creciendo.png" alt="" width="300"/>
+<img src="./img/Princesnake_juego.png" alt="" width="300"/>
 
-
-## Imagenes y vídeos
-## Motivación del proyecto
+# Motivación del proyecto
 Juego basado en la serpiente del nokia3310
 Mi objetivo es llevar a cabo el famoso juego de la serpiente al que muchos de nosotros hemos jugado. 
 La serpeinte irá comiendo coronas de princesa y a medida que come va creaciendo, si se encuentra con otro icono que no sea la corona y se lo come entonces pierdes, al igual que si se da con la pared.
 
-## Estructura del Proyecto
-## Acceso al juego
+# Estructura del Proyecto
+# Acceso al juego
 
-Link del proyecto : Link de proyecto : https://almuperez.github.io/princess-snake-project/
+Puedes jugar pinchando el siguiente enlace : [Juega aquí](https://almuperez.github.io/princess-snake-project/
+)
 
-## Manual de instalación
+# Manual de instalación
 
-git clone https://github.com/Almuperez/princess-snake-project.git
-yarn init -y
-yarn isntall
-yarn run dev
+* Primer paso: clonar el siguiente repositorio en la terminal
+  
+  * git clone https://github.com/Almuperez/princess-snake-project.git
+  
+* Segundo paso: ejecutar en la terminal los siguientes comandos en el orden indicado 
+  * yarn init -y
+  * yarn isntall
+  * yarn run dev
 
-## Ejemplos de código
-## Entornos de ejecución
-## Recursos útiles
+
+# Ejemplos de código
+# Entornos de ejecución
+
+# Recursos útiles
 Para llevar a cabo el canvas del juego entender la Api canvas: 
 https://developer.mozilla.org/es/docs/Web/API/Canvas_API 
 https://developer.mozilla.org/es/docs/Web/API/Canvas_API
 
-## Listado de paquetes y dependencias
-NodeJS
-Yarn
-Typescript
-Eslint
-Lodash
-## Estadísticas
-## Licencias
-## Agradecimientos
-## Otras consideraciones
+# Listado de paquetes y dependencias
+
+* Juego ejecutado en enorno de ejecución NodeJS
+* Gesttor de dependencias utilizado: Yarn
+* Para ejecutar el html: Parcel
+* Lenguaje utilizado: Typescript
+* Librerias utilizadas: Lodash
+* Otras herramientas: eslint
+
+# Licencias
+# Agradecimientos
+# Otras consideraciones
 
 

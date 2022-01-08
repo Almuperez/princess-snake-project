@@ -483,6 +483,7 @@ window.onload = ()=>{
     let actors = [
         fps,
         snake,
+        _gameManager.Manager,
         chrono,
         ..._gameManager.Manager.crowns
     ];
@@ -679,6 +680,8 @@ class GameManager {
     }
     getChrono() {
         return `${this.chrono.toFixed(1)} segundos`;
+    }
+    draw() {
     }
 }
 let Manager;

@@ -19,6 +19,7 @@ window.onload = () => {
   let actors: Array<IActor> = [
     fps, 
     snake, 
+    Manager,
     chrono,
     ...Manager.crowns];
   let lastFrame = 0;

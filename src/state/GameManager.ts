@@ -37,6 +37,7 @@ class GameManager {
   getChrono (){
     return `${this.chrono.toFixed(1)} segundos`
   }
+  draw() { }
 }
 
 export let Manager: GameManager;

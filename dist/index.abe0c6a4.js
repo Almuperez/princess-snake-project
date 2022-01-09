@@ -463,7 +463,6 @@ var _snake = require("./actors/Snake");
 var _fpsviewer = require("./actors/FPSViewer");
 var _gameManager = require("./state/GameManager");
 var _chrono = require("./actors/Chrono");
-//import { AddPoint } from "./actors/Addpoint";
 window.onload = ()=>{
     var canvas = document.getElementById("canvas");
     var ctx = canvas.getContext("2d");
@@ -574,9 +573,7 @@ class Snake extends _actor.Actor {
     draw(delta1, ctx) {
         ctx.fillStyle = this.snakeColor;
         ctx.translate(this.position.x, this.position.y);
-        // ctx.rotate(angleToRad(this.angle));
-        ctx.fillRect(//es negativo para desplazarme entre x e y
-        -this.snakeSize.h / 2, -this.snakeSize.w / 2, this.snakeSize.h, this.snakeSize.w);
+        ctx.fillRect(-this.snakeSize.h / 2, -this.snakeSize.w / 2, this.snakeSize.h, this.snakeSize.w);
     }
 }
 
@@ -675,7 +672,8 @@ class GameManager {
         if (this.points > 10) {
             this.crowns.forEach((b)=>b.status = false
             );
-            alert(`YOU WON Your score ${this.getChrono()}`);
+            alert(`YOU WON! Your score ${this.getChrono()}, pulsa Aceptar para volver a empezar`);
+            location.reload();
         }
     }
     getChrono() {
@@ -721,7 +719,6 @@ class Crown extends _actor.Actor {
         let crownPos = this.position;
         let distance = 0;
         if (snakePos) distance = Math.sqrt(Math.pow(crownPos.x - snakePos.x, 2) + Math.pow(crownPos.y - snakePos.y, 2));
-        //math.floor es un metodo que si es 30.9 lo redondea a 30. metodo que redondea hacia abajo
         if (Math.floor(distance) == 30) {
             this.position = {
                 x: _lodashDefault.default.random(0, 500),
@@ -729,7 +726,6 @@ class Crown extends _actor.Actor {
             };
             _gameManager.Manager.addPoint();
             if (this.snake.growSnake) this.snake.growSnake();
-        // this.snake.grownSnake();
         }
     }
     keyboard_event_down(key) {

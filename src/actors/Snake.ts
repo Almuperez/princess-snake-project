@@ -35,12 +35,11 @@ export class Snake extends Actor implements IActor {
     this.position.y = newPosY;
   }
 
-  growSnake(){
-    const sizesnake = this.snakeSize
-    this.snakeSize = {w: sizesnake.w + 10, h: sizesnake.h}
+  growSnake() {
+    const sizesnake = this.snakeSize;
+    this.snakeSize = { w: sizesnake.w + 10, h: sizesnake.h };
     this.maxSpeed = this.maxSpeed * 1.005;
   }
-
 
   keyboard_event_down(key: string) {
     switch (key) {
@@ -70,9 +69,7 @@ export class Snake extends Actor implements IActor {
   draw(delta: number, ctx: CanvasRenderingContext2D) {
     ctx.fillStyle = this.snakeColor;
     ctx.translate(this.position.x, this.position.y);
-    // ctx.rotate(angleToRad(this.angle));
     ctx.fillRect(
-      //es negativo para desplazarme entre x e y
       -this.snakeSize.h / 2,
       -this.snakeSize.w / 2,
       this.snakeSize.h,

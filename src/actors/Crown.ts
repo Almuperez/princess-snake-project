@@ -13,7 +13,6 @@ type Size = { w: number; h: number };
 export class Crown extends Actor {
   crownSize: Size;
   crownColor: string;
-  //Le paso el actor snake para poder hacer el update con la distancia
   snake: IActor;
   status: boolean;
   image: HTMLImageElement;
@@ -43,14 +42,13 @@ export class Crown extends Actor {
           Math.pow(crownPos.y - snakePos.y, 2)
       );
     }
-    //math.floor es un metodo que si es 30.9 lo redondea a 30. metodo que redondea hacia abajo
+
     if (Math.floor(distance) == 30) {
       this.position = { x: _.random(0, 500), y: _.random(0, 500) };
       Manager.addPoint();
       if (this.snake.growSnake) {
         this.snake.growSnake();
       }
-      // this.snake.grownSnake();
     }
   }
 

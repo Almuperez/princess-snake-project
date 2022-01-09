@@ -21,8 +21,8 @@ class GameManager {
     //console.log("ready!");
   }
 
-  update(delta: number){
-    this.chrono += delta
+  update(delta: number) {
+    this.chrono += delta;
   }
 
   addPoint() {
@@ -31,13 +31,16 @@ class GameManager {
     //console.log("adpoint", this.points)
     if (this.points > 10) {
       this.crowns.forEach((b) => (b.status = false));
-      alert(`YOU WON Your score ${this.getChrono()}`);
+      alert(
+        `YOU WON! Your score ${this.getChrono()}, pulsa Aceptar para volver a empezar`
+      );
+      location.reload();
     }
   }
-  getChrono (){
-    return `${this.chrono.toFixed(1)} segundos`
+  getChrono() {
+    return `${this.chrono.toFixed(1)} segundos`;
   }
-  draw() { }
+  draw() {}
 }
 
 export let Manager: GameManager;

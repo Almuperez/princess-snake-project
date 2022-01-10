@@ -25,6 +25,8 @@ class GameManager {
     this.chrono += delta;
   }
 
+  //puntos para ganar el juego + alert
+  
   addPoint() {
     //console.log("addPoint");
     this.points++;

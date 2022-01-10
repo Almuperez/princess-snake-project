@@ -35,6 +35,7 @@ export class Snake extends Actor implements IActor {
     this.position.y = newPosY;
   }
 
+  //grownsnake crecer y velocidad
   growSnake() {
     const sizesnake = this.snakeSize;
     this.snakeSize = { w: sizesnake.w + 10, h: sizesnake.h };

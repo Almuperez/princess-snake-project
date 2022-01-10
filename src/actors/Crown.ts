@@ -32,6 +32,7 @@ export class Crown extends Actor {
     this.image.src = crownimg;
   }
 
+  // de dónde genero la colisión método math.flor para redondear distancia, las coronas cambian de posición con libreria lodash, llamo a grownsanke para que crezca cuando se come la serpiente
   update(delta: number) {
     let snakePos = this.snake.position;
     let crownPos = this.position;
@@ -43,6 +44,7 @@ export class Crown extends Actor {
       );
     }
 
+    //método math.floor
     if (Math.floor(distance) == 30) {
       this.position = { x: _.random(0, 500), y: _.random(0, 500) };
       Manager.addPoint();

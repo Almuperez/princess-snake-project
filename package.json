@@ -2,6 +2,7 @@
   "name": "proyecto_canvas",
   "version": "1.0.0",
   "scripts": {
+    "start": "parcel serve -p $PORT index.html",
     "dev": "parcel index.html",
     "build": "yarn run clean && yarn run ghbuild",
     "ghbuild": "parcel build --dist-dir docs --public-url /princess-snake-project index.html",
